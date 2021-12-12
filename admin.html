@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="datatable/datatables.min.css"/>
+
+
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="datatable/datatables.min.js"></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+    <title>Admin</title>
+    <link rel="icon" href="picture/logo.svg">
+
+</head>
+<body>
+    
+<div class="container-fluid card-body">
+    <div class="row">
+        <div class="col-12 text-center">
+		<img src="carlogo.png" alt="">
+            <h3 class="mb-3">ADMINSTRATOR</h3>
+        </div>
+    </div>
+    
+    <form class="mb-3">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="make">Make</label>
+                <input type="text" class="form-control" id="make" value="Vauxhall">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" id="model" value="Corsa">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="reg">Reg</label>
+                <input type="text" class="form-control" id="reg" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" value="">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="dealer">Dealer</label>
+                <input type="text" class="form-control" id="dealer" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="town">Town</label>
+                <input type="text" class="form-control" id="town" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" value="">
+            </div>
+        </div>
+        <div class="form-row">
+
+            <div class="form-group col-md-3">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="region">Region</label>
+                <input type="text" class="form-control" id="region" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="from-miles">Miles (From)</label>
+                <input type="number" class="form-control" id="from-miles" value="0">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="to-miles">Miles (To)</label>
+                <input type="number" class="form-control" id="to-miles" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-success" onclick="search_car();">Search Cars</button>
+            <button type="button" class="btn btn-primary" onclick="show_add_dialog();">Add New Cars</button>
+            <button type="button" class="btn btn-danger" onclick="logout();">Home</button>
+           
+            
+                 
+        </div>
+        
+
+    </form>
+    <div class="row">
+        <div class="col-12 ">
+            <table id="car-table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Reg</th>
+                    <th>Color</th>
+                    <th>Miles</th>
+                    <th>Price</th>
+                    <th>Dealer</th>
+                    <th>Town</th>
+                    <th>Phone</th>
+                    <th>Description</th>
+                    <th>Region</th>
+                    <th>Detail</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detail-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Car detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 my-auto">
+                        <img src="picture/Nissan.jpg" style="width: 100%; height: auto;" alt="Car Image" class="rounded">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <h3 class="col-md-12" id="d-price" style="color: red"></h3>
+                            <h6 class="col-md-12" id="d-model"></h6>
+                            <h6 class="col-md-12" id="d-miles"></h6>
+                            <h6 class="col-md-12" id="d-dealer"></h6>
+                            <h6 class="col-md-12" id="d-phone"></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Purchase</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Car</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="mb-3">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="a-make">Make</label>
+                            <input type="text" class="form-control" id="a-make" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-model">Model</label>
+                            <input type="text" class="form-control" id="a-model" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-reg">Reg</label>
+                            <input type="text" class="form-control" id="a-reg" value="">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="a-color">Color</label>
+                            <input type="text" class="form-control" id="a-color" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-miles">Miles</label>
+                            <input type="number" class="form-control" id="a-miles" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-price">Price</label>
+                            <input type="number" class="form-control" id="a-price" value="">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="a-dealer">Dealer</label>
+                            <input type="text" class="form-control" id="a-dealer" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-town">Town</label>
+                            <input type="text" class="form-control" id="a-town" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-phone">Phone</label>
+                            <input type="text" class="form-control" id="a-phone" value="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="a-description">Description</label>
+                            <input type="text" class="form-control" id="a-description" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="a-region">Region</label>
+                            <input type="text" class="form-control" id="a-region" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="add_car();">Add Car</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Car</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="mb-3">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="u-make">Make</label>
+                            <input type="text" class="form-control" id="u-make" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-model">Model</label>
+                            <input type="text" class="form-control" id="u-model" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-reg">Reg</label>
+                            <input type="text" class="form-control" id="u-reg" value="">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="u-color">Color</label>
+                            <input type="text" class="form-control" id="u-color" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-miles">Miles</label>
+                            <input type="number" class="form-control" id="u-miles" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-price">Price</label>
+                            <input type="number" class="form-control" id="u-price" value="">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="u-dealer">Dealer</label>
+                            <input type="text" class="form-control" id="u-dealer" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-town">Town</label>
+                            <input type="text" class="form-control" id="u-town" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-phone">Phone</label>
+                            <input type="text" class="form-control" id="u-phone" value="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="u-description">Description</label>
+                            <input type="text" class="form-control" id="u-description" value="">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="u-region">Region</label>
+                            <input type="text" class="form-control" id="u-region" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="update_car();">Update Car</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let carTbl = $('#car-table').DataTable( {
+        autoWidth: false,
+        destroy: true,
+        searching:false,
+        bSort: false,
+        dom: '<"top"p>rt<"bottom"i>',
+        columns: [
+            { data: 'make' },
+            { data: 'model' },
+            { data: 'Reg' },
+            { data: 'colour' },
+            { data: 'miles' },
+            { data: 'price' },
+            { data: 'dealer' },
+            { data: 'town' },
+            { data: 'telephone' },
+            { data: 'description' },
+            { data: 'region' },
+            { data: 'detail' },
+            { data: 'purchase' },
+        ],columnDefs: [
+            {
+                targets: [5],
+                render: function ( data, type, row ) {
+                    return "£" + data;
+                }
+            }, {
+                targets: [11],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).css('width', '0px');
+                },
+                render: function ( data, type, row ) {
+                    return '<button type="button" class="update btn btn-primary btn-sm">Update</button>';
+                }
+            }, {
+                targets: [12],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).css('width', '0px');
+                },
+                render: function ( data, type, row ) {
+                    return '<button type="button" class="delete btn btn-danger btn-sm">Delete</button>';
+                }
+            }
+        ]
+    });
+
+    $.ajax({
+        url: "car.php",
+        type: "POST",
+        data: {functionname: 'read_car'}
+    }).done(function (data) {
+        carTbl.clear();
+        carTbl.rows.add(data);
+        carTbl.draw();
+
+    }).fail(function () {
+
+    }).always(function () {
+
+    });
+
+    function search_car() {
+        let make = $("#make").val().trim();
+        let model = $("#model").val().trim();
+        let Reg = $("#reg").val().trim();
+        let colour = $("#color").val().trim();
+        let price = $("#price").val().trim();
+        let dealer = $("#dealer").val().trim();
+        let town = $("#town").val().trim();
+        let telephone = $("#phone").val().trim();
+        let description = $("#description").val().trim();
+        let region = $("#region").val().trim();
+
+        let from_miles = $("#from-miles").val().trim();
+        let to_miles = $("#to-miles").val().trim();
+
+        let search_key = {"make":make,  "model":model, "Reg":Reg, "colour":colour, "from_miles":from_miles, "to_miles":to_miles, "price":price, "dealer":dealer,
+            "town":town, "telephone":telephone, "description":description, "region":region};
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'search_car', key: search_key}
+        }).done(function (data) {
+            carTbl.clear();
+            carTbl.rows.add(data);
+            carTbl.draw();
+
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    let selected_car_index;
+    let selected_tbl_row;
+
+    $('#car-table tbody').on('click', 'td .update', function () {
+        let row = carTbl.row($(this).closest('tr'));
+        let data = row.data();
+
+        selected_tbl_row = row.index();
+        selected_car_index = data['carIndex'];
+
+        $("#u-make").val(data['make']);
+        $("#u-model").val(data['model']);
+        $("#u-reg").val(data['Reg']);
+        $("#u-color").val(data['colour']);
+        $("#u-miles").val(data['miles']);
+        $("#u-price").val(data['price']);
+        $("#u-dealer").val(data['dealer']);
+        $("#u-town").val(data['town']);
+        $("#u-phone").val(data['telephone']);
+        $("#u-description").val(data['description']);
+        $("#u-region").val(data['region']);
+
+        $('#update-dialog').modal('show');
+    });
+    
+    function show_add_dialog() {
+        $('#add-dialog').modal('show');
+    }
+
+    function add_car() {
+        let make = $("#a-make").val().trim();
+        let model = $("#a-model").val().trim();
+        let Reg = $("#a-reg").val().trim();
+        let colour = $("#a-color").val().trim();
+        let miles = $("#a-miles").val().trim();
+        let price = $("#a-price").val().trim();
+        let dealer = $("#a-dealer").val().trim();
+        let town = $("#a-town").val().trim();
+        let telephone = $("#a-phone").val().trim();
+        let description = $("#a-description").val().trim();
+        let region = $("#a-region").val().trim();
+
+        if(make === "" || model === "" || Reg === "" || colour === "" || miles === "" || price === "" || dealer === "" || town === "" || telephone === ""
+            || description === "" || region === ""){
+            alert("Fill values");
+            return;
+        }
+        let new_values = {"make":make,  "model":model, "Reg":Reg, "colour":colour, "miles":miles, "price":price, "dealer":dealer,
+            "town":town, "telephone":telephone, "description":description, "region":region};
+
+        $('#add-dialog').modal('hide');
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'add_car', add: new_values}
+        }).done(function (data) {
+            if(data['res'] === "success"){
+                let index = data['index'];
+                add_car_tbl_row(index, new_values)
+
+                $("#a-make").val('');
+                $("#a-model").val('');
+                $("#a-reg").val('');
+                $("#a-color").val('');
+                $("#a-miles").val('');
+                $("#a-price").val('');
+                $("#a-dealer").val('');
+                $("#a-town").val('');
+                $("#a-phone").val('');
+                $("#a-description").val('');
+                $("#a-region").val('');
+            }
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    function update_car() {
+        let make = $("#u-make").val().trim();
+        let model = $("#u-model").val().trim();
+        let Reg = $("#u-reg").val().trim();
+        let colour = $("#u-color").val().trim();
+        let miles = $("#u-miles").val().trim();
+        let price = $("#u-price").val().trim();
+        let dealer = $("#u-dealer").val().trim();
+        let town = $("#u-town").val().trim();
+        let telephone = $("#u-phone").val().trim();
+        let description = $("#u-description").val().trim();
+        let region = $("#u-region").val().trim();
+
+        if(make === "" || model === "" || Reg === "" || colour === "" || miles === "" || price === "" || dealer === "" || town === "" || telephone === ""
+            || description === "" || region === ""){
+            alert("Fill values");
+            return;
+        }
+        let update_values = {"make":make,  "model":model, "Reg":Reg, "colour":colour, "miles":miles, "price":price, "dealer":dealer,
+            "town":town, "telephone":telephone, "description":description, "region":region, "carIndex": selected_car_index};
+
+        $('#update-dialog').modal('hide');
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'update_car', update: update_values}
+        }).done(function (data) {
+            if(data['res'] === "success"){
+                update_car_tbl(update_values)
+            }
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+
+    let add_car_tbl_row = function (index, data) {
+        carTbl.row.add({
+            "carIndex": index,
+            "make": data['make'],
+            "model": data['model'],
+            "Reg": data['Reg'],
+            "colour": data['colour'],
+            "miles": data['miles'],
+            "price": data['price'],
+            "dealer": data['dealer'],
+            "town": data['town'],
+            "telephone": data['telephone'],
+            "description": data['description'],
+            "region": data['region'],
+            "detail": "detail",
+            "purchase": "purchase"
+        }).draw();
+    }
+
+    var update_car_tbl = function (data) {
+        var old_data = carTbl.row(selected_tbl_row).data();
+        old_data['make'] = data['make'];
+        old_data['model'] = data['model'];
+        old_data['Reg'] = data['Reg'];
+        old_data['colour'] = data['colour'];
+        old_data['miles'] = data['miles'];
+        old_data['price'] = data['price'];
+        old_data['dealer'] = data['dealer'];
+        old_data['town'] = data['town'];
+        old_data['telephone'] = data['telephone'];
+        old_data['description'] = data['description'];
+        old_data['region'] = data['region'];
+
+        carTbl.row(selected_tbl_row).data(old_data).draw(false);
+
+    }
+
+    $('#car-table tbody').on('click', 'td .delete', function () {
+        let row = carTbl.row($(this).closest('tr'));
+        let data = row.data();
+
+        let index = {"index":data['carIndex']};
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'delete_car', delete: index}
+        }).done(function (data) {
+            if(data['res'] === "success") {
+                row.remove().draw();
+            }
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    });
+
+    function logout() {
+        window.location.href = "index.html"
+    }
+</script>
+
+</body>
+</html>

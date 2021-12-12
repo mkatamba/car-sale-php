@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="datatable/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/my.css"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="datatable/datatables.min.js"></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+
+    <title>Search</title>
+    <link rel="icon" href="picture/logo.svg">
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <img src="carlogo.png" alt="">
+                        <a href="index.html" class="logo">CAR <em> YARD</em></a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li><a href="index.html" class="active">HOME</a></li>
+                            <li><a href="search.html">CARS</a></li>
+                            <li><a href="signin.html">CUSTOMER LOGIN</a></li> 
+                            <li><a href="signin.html">ADMIN LOGIN</a></li> 
+                        </ul>        
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</head>
+<br> <br> <br> <br> <br>
+<body>
+<div class="container-fluid card-body">
+    <div class="row">
+        <div class="col-12 text-center">
+            <img src="" alt="">
+            <h3 class="mb-3">Search Cars</h3>
+        </div>
+    </div>
+    <form class="mb-3">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="make">Make</label>
+                <input type="text" class="form-control" id="make" value="Vauxhall">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" id="model" value="Corsa">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="reg">Reg</label>
+                <input type="text" class="form-control" id="reg" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" value="">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="from-price">Price (from)</label>
+                <input type="number" class="form-control" id="from-price" value="0">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="to-price">Price (To)</label>
+                <input type="number" class="form-control" id="to-price" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="dealer">Dealer</label>
+                <input type="text" class="form-control" id="dealer" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="town">Town</label>
+                <input type="text" class="form-control" id="town" value="">
+            </div>
+        </div>
+        <div class="form-row">
+
+            <div class="form-group col-md-3">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="region">Region</label>
+                <input type="text" class="form-control" id="region" value="">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="from-miles">Miles (From)</label>
+                <input type="number" class="form-control" id="from-miles" value="0">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="to-miles">Miles (To)</label>
+                <input type="number" class="form-control" id="to-miles" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <button type="button" class="btn btn-success" onclick="search_car();">Search Cars</button>
+            
+            <button type="button" class="btn btn-danger" onclick="logout();">Logout</button>
+        </div>
+
+    </form>
+    <div class="row">
+        <div class="col-12 ">
+            <table id="car-table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Reg</th>
+                    <th>Color</th>
+                    <th>Miles</th>
+                    <th>Price</th>
+                    <th>Dealer</th>
+                    <th>Town</th>
+                    <th>Phone</th>
+                    <th>description</th>
+                    <th>Region</th>
+                    <th>Detail</th>
+                    <th>Purchase</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detail-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Car details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 my-auto">
+                        <img src="exterior.jpg" style="width: 100%; height: auto;" alt="Car Image" class="rounded">
+                        <img src="picture/Nissan.jpg" style="width: 100%; height: auto;" alt="Car Image" class="rounded">
+                        <img src="interior.jpg" style="width: 100%; height: auto;" alt="Car Image" class="rounded">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <h3 class="col-md-12" id="d-price" style="color: rgb(26, 23, 23)"></h3>
+                            <h6 class="col-md-12" id="d-model"></h6>
+                            <h6 class="col-md-12" id="d-miles"></h6>
+                            <h6 class="col-md-12" id="d-dealer"></h6>
+                            <h6 class="col-md-12" id="d-phone"></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="payment-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-uppercase">Payment Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrapper">
+                    <form class="form mt-4">
+                        <div class="form-group">
+                            <label class="text-uppercase">Address</label>
+                            <input type="text" id="p-address" class="form-control" placeholder="Address" value="4 Banana Street Peterborough PE1 4DZ">
+                        </div>
+                        <div class="d-flex w-100">
+                            <div class="d-flex w-50 pr-sm-4">
+                                <div class="form-group"> <label class="text-uppercase">Name</label>
+                                    <input id="p-name" type="text" class="form-control" placeholder="Name" value="James Larner">
+                                </div>
+                            </div>
+                            <div class="d-flex w-50 pr-sm-4">
+                                <div class="form-group"> <label class="text-uppercase">Tel</label>
+                                    <input id="p-tel" type="text" class="form-control" placeholder="Tel" value="01733762255">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">name on the card</label>
+                            <input type="text" class="form-control" placeholder="Master">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-uppercase">card number</label>
+                            <div class="card-number">
+                                <input type="text" id="p-cardnumber" class="card-no" step="4" placeholder="1234 4567 5869 1234" pattern="^[0-9].{15,}">
+                                <span class="">
+                                    <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-marcus-samuelsson-group-2.png" alt="" width="30"
+                                         height="30">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex w-100">
+                            <div class="d-flex w-50 pr-sm-4">
+                                <div class="form-group"> <label class="text-uppercase">exp.date</label>
+                                    <input type="text" id="p-expire" class="form-control" placeholder="12/2022">
+                                </div>
+                            </div>
+                            <div class="d-flex w-50 pl-sm-5 pl-3">
+                                <div class="form-group"> <label>CVV</label>
+                                    <a href="#" title="CVV is a credit or debit card number, the last three digit number printed on the signature panel">
+                                        what's this</a>
+                                    <input type="password" id="p-cvv" class="form-control pr-5" maxlength="3" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            <input type="button" value="Purchase" class="text-uppercase btn btn-primary btn-block p-3" onclick="purchase();">
+                        </div>
+                        <div id="form-footer">
+                            <p>By placing your order, you agree to our</p>
+                            <p><a href="#">privacy notice</a> & <a href="#">terms of use</a>.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let selectData;
+
+    let carTbl = $('#car-table').DataTable( {
+        autoWidth: false,
+        destroy: true,
+        searching:false,
+        bSort: false,
+        dom: '<"top"p>rt<"bottom"i>',
+        columns: [
+            { data: 'make' },
+            { data: 'model' },
+            { data: 'Reg' },
+            { data: 'colour' },
+            { data: 'miles' },
+            { data: 'price' },
+            { data: 'dealer' },
+            { data: 'town' },
+            { data: 'telephone' },
+            { data: 'description' },
+            { data: 'region' },
+            { data: 'detail' },
+            { data: 'purchase' },
+        ],columnDefs: [
+            {
+                targets: [5],
+                render: function ( data, type, row ) {
+                    return "£" + data;
+                }
+            }, {
+                targets: [11],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).css('width', '0px');
+                },
+                render: function ( data, type, row ) {
+                    return '<button type="button" class="detail btn btn-primary btn-sm">Detail</button>';
+                }
+            }, {
+                targets: [12],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).css('width', '0px');
+                },
+                render: function ( data, type, row ) {
+                    return '<button type="button" class="purchase btn btn-danger btn-sm">Purchase</button>';
+                }
+            }
+        ]
+    });
+
+    $.ajax({
+        url: "car.php",
+        type: "POST",
+        data: {functionname: 'read_car'}
+    }).done(function (data) {
+        carTbl.clear();
+        carTbl.rows.add(data);
+        carTbl.draw();
+
+    }).fail(function () {
+
+    }).always(function () {
+
+    });
+
+    function search_car() {
+        let make = $("#make").val().trim();
+        let model = $("#model").val().trim();
+        let Reg = $("#reg").val().trim();
+        let colour = $("#color").val().trim();
+        let dealer = $("#dealer").val().trim();
+        let town = $("#town").val().trim();
+        let description = $("#description").val().trim();
+        let region = $("#region").val().trim();
+
+        let from_miles = $("#from-miles").val().trim();
+        let to_miles = $("#to-miles").val().trim();
+        let from_price = $("#from-price").val().trim();
+        let to_price = $("#to-price").val().trim();
+
+        let search_key = {"make":make,  "model":model, "Reg":Reg, "colour":colour, "from_miles":from_miles, "to_miles":to_miles, "from_price":from_price, "to_price":to_price, "dealer":dealer,
+            "town":town, "description":description, "region":region};
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'search_car', key: search_key}
+        }).done(function (data) {
+            carTbl.clear();
+            carTbl.rows.add(data);
+            carTbl.draw();
+
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    $('#car-table tbody').on('click', 'td .detail', function () {
+        let row = carTbl.row($(this).closest('tr'));
+        let data = row.data();
+        $("#d-model").text("Model: " + data['model'])
+        $("#d-miles").text("Miles: " + data['miles'] + " miles")
+        $("#d-price").text("£" + data['price'])
+        $("#d-dealer").text("Dealer: " + data['dealer'])
+        $("#d-phone").text("Phone: " + data['telephone'])
+
+        $('#detail-dialog').modal('show');
+    });
+
+    $('#car-table tbody').on('click', 'td .purchase', function () {
+        let row = carTbl.row($(this).closest('tr'));
+        selectData = row.data();
+        $('#payment-dialog').modal('show');
+    });
+
+    function purchase() {
+        let name = $("#p-name").val().trim();
+        let address = $("#p-address").val().trim();
+        let tel = $("#p-tel").val().trim();
+        let cardnum = $("#p-cardnumber").val().trim();
+        let expire = $("#p-expire").val().trim();
+        let cvv = $("#p-cvv").val().trim();
+
+        if(name === ""){
+            alert("Please enter name")
+            return;
+        }
+
+        if(address === ""){
+            alert("Please enter address")
+            return;
+        }
+        if(tel === ""){
+            alert("Please enter phone number")
+            return;
+        }
+        if(cardnum === ""){
+            alert("Please enter phone number")
+            return;
+        }
+        if(expire === ""){
+            alert("Please enter expired date")
+            return;
+        }
+        if(cvv === ""){
+            alert("Please enter CVV code")
+            return;
+        }
+        $('#payment-dialog').modal('hide');
+
+        let purchase = {"name":name,  "address":address, "tel":tel,
+            "email":"james.larner@peterborough.ac.uk", "carIndex":selectData['carIndex']};
+
+
+        $.ajax({
+            url: "car.php",
+            type: "POST",
+            data: {functionname: 'purchase', purchase: purchase}
+        }).done(function (data) {
+            if(data['res'] === "success"){
+                localStorage.setItem("name", name);
+                localStorage.setItem("address", address);
+                localStorage.setItem("tel", tel);
+                window.location.href = "receipt.html"
+            }
+
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+    }
+
+    function logout() {
+        window.location.href = "index.html"
+    }
+    function view_purchase() {
+        window.location.href = "purchase.html"
+    }
+</script>
+</body>
+ <!-- jQuery -->
+ <script src="assets/js/jquery-2.1.0.min.js"></script>
+
+ <!-- Bootstrap -->
+ <script src="assets/js/popper.js"></script>
+ <script src="assets/js/bootstrap.min.js"></script>
+
+ <!-- Plugins -->
+ <script src="assets/js/scrollreveal.min.js"></script>
+ <script src="assets/js/waypoints.min.js"></script>
+ <script src="assets/js/jquery.counterup.min.js"></script>
+ <script src="assets/js/imgfix.min.js"></script> 
+ <script src="assets/js/mixitup.js"></script> 
+ <script src="assets/js/accordions.js"></script>
+ 
+ <!-- Global Init -->
+ <script src="assets/js/custom.js"></script>
+</html>

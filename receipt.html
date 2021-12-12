@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="datatable/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/my.css"/>
+
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="datatable/datatables.min.js"></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+
+    
+
+</head>
+<body>
+    <div class="container-fluid card-body">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img src="carlogo.png" alt="">
+                <h3 class="mb-3">Receipt</h3>
+            </div>
+        </div>
+        
+    <article class="bg-danger mb-3">
+        <div class="card-body text-center">
+    
+            <h6 style="color:whitesmoke">VEHICLE AVAILABLE IN <u>TWO DAYS </u>FROM DATE OF PURCHASE </h6>
+            <H1><a class="btn btn-warning" target="_blank" href="https://www.comparethemarket.com/car-insurance/"> CLICK
+                    TO APPLY FOR INSURANCE
+                    <i class="fa fa-window-restore "></i></a></H1>
+        </div>
+        </article>
+      <div class="container-fluid card-body">
+    <div class="row">
+        <div class="col-12 text-center">
+           
+            <h3 class="mb-3"></h3>
+        </div>
+    </div>
+    <form class="mb-3">
+        <form class="mb-3">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" value="" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" value="james.larner@peterborough.ac.uk" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" value="" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="tel">Tel</label>
+                    <input type="text" class="form-control" id="tel" value="" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-success" onclick="go_back();">Back To Search</button>
+            </div>
+        </form>
+
+    </form>
+    <div class="row">
+        <div class="col-12 ">
+            <table id="car-table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Reg</th>
+                    <th>Color</th>
+                    <th>Miles</th>
+                    <th>Price</th>
+                    <th>Dealer</th>
+                    <th>Town</th>
+                    <th>Phone</th>
+                    <th>Description</th>
+                    <th>Region</th>
+                    <th>Detail</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detail-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Car detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 my-auto">
+                        <img src="picture/Nissan.jpg" style="width: 100%; height: auto;" alt="Car Image" class="rounded">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <h3 class="col-md-12" id="d-price" style="color: red"></h3>
+                            <h6 class="col-md-12" id="d-model"></h6>
+                            <h6 class="col-md-12" id="d-miles"></h6>
+                            <h6 class="col-md-12" id="d-dealer"></h6>
+                            <h6 class="col-md-12" id="d-phone"></h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#name").val(localStorage.getItem("name"))
+    $("#address").val(localStorage.getItem("address"))
+    $("#tel").val(localStorage.getItem("tel"))
+
+    let carTbl = $('#car-table').DataTable( {
+        autoWidth: false,
+        destroy: true,
+        searching:false,
+        bSort: false,
+        dom: '<"top"p>rt<"bottom"i>',
+        columns: [
+            { data: 'make' },
+            { data: 'model' },
+            { data: 'Reg' },
+            { data: 'colour' },
+            { data: 'miles' },
+            { data: 'price' },
+            { data: 'dealer' },
+            { data: 'town' },
+            { data: 'telephone' },
+            { data: 'description' },
+            { data: 'region' },
+            { data: 'detail' }
+        ],columnDefs: [
+            {
+                targets: [5],
+                render: function ( data, type, row ) {
+                    return "£" + data;
+                }
+            }, {
+                targets: [11],
+                createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).css('width', '0px');
+                },
+                render: function ( data, type, row ) {
+                    return '<button type="button" class="detail btn btn-primary btn-sm">Detail</button>';
+                }
+            }
+        ]
+    });
+
+    $.ajax({
+        url: "car.php",
+        type: "POST",
+        data: {functionname: 'read_purchase', email : "james.larner@peterborough.ac.uk"}
+    }).done(function (data) {
+        carTbl.clear();
+        carTbl.rows.add(data);
+        carTbl.draw();
+
+    }).fail(function () {
+
+    }).always(function () {
+
+    });
+
+    $('#car-table tbody').on('click', 'td .detail', function () {
+        let row = carTbl.row($(this).closest('tr'));
+        let data = row.data();
+        $("#d-model").text("Model: " + data['model'])
+        $("#d-miles").text("Miles: " + data['miles'] + " miles")
+        $("#d-price").text("£" + data['price'])
+        $("#d-dealer").text("Dealer: " + data['dealer'])
+        $("#d-phone").text("Phone: " + data['telephone'])
+
+        $('#detail-dialog').modal('show');
+    });
+
+    function go_back() {
+        window.location.href = "search.html"
+    }
+</script>
+
+</body>
+</html>

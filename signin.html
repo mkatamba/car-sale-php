@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <title>Login</title>
+    <link rel="icon" href="picture/logo.svg">
+</head>
+
+<body>
+    
+
+    <section class="vh-100" style="background-color: #f54b4b;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <div class="text-center intro">
+                                <img src="picture/logo.svg" width="120px">
+                            </div>
+
+                            <div class="mt-4 text-center">
+                                <h3 class="mb-5"></h3>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <input type="email" id="email" class="form-control form-control-lg" placeholder="Email"
+                                    value="james.larner@peterborough.ac.uk" />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" id="password" class="form-control form-control-lg"
+                                    placeholder="Password" value="chicken" />
+                            </div>
+                            <button class="btn btn-primary btn-lg btn-block" onclick="login();">Login</button>
+                           <hr class="my-4">                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function login() {
+            let email = $("#email").val();
+            let password = $("#password").val();
+
+            if (email.trim() === "" || password.trim() === "") {
+                alert("Please enter email and password");
+                return;
+            }
+            if (email === "james.larner@peterborough.ac.uk" && password === "chicken") {
+                window.location.href = "search.html"
+            } else if (email === "admin" && password === "admin") {
+                window.location.href = "admin.html"
+            } else {
+                alert("Invalid username and password");
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
